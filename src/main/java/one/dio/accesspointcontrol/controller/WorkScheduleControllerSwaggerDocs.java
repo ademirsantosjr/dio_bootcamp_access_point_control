@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import one.dio.accesspointcontrol.dto.WorkScheduleDTO;
+import one.dio.accesspointcontrol.exception.WorkScheduleNotFoundException;
 
 @Api("Manages Access Point Control")
 public interface WorkScheduleControllerSwaggerDocs {
@@ -14,7 +15,7 @@ public interface WorkScheduleControllerSwaggerDocs {
     @ApiOperation(value = "Creates Work Schedule (e.g. 'full-time', 'part-time', 'flexible')")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "Work Schedule was successfully created"),
-        @ApiResponse(code = 400, message = "One or more required fields are missing.")
+        @ApiResponse(code = 400, message = "One or more required fields are missing")
     })
     WorkScheduleDTO create(WorkScheduleDTO workScheduleDTO);
 
@@ -22,5 +23,12 @@ public interface WorkScheduleControllerSwaggerDocs {
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "List of all Work Schedules in the database")
     })
-    List<WorkScheduleDTO> findAll();    
+    List<WorkScheduleDTO> findAll();
+    
+    @ApiOperation(value = "Returns Work Schedule according to a given ID")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Work Schedule successfully found with this given ID"),
+        @ApiResponse(code = 404, message = "No Work Schedule was found with this given ID")
+    })
+    WorkScheduleDTO findById(long id) throws WorkScheduleNotFoundException;
 }

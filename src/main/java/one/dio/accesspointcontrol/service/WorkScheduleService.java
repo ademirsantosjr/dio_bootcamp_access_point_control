@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
 import one.dio.accesspointcontrol.dto.WorkScheduleDTO;
+import one.dio.accesspointcontrol.exception.WorkScheduleNotFoundException;
 import one.dio.accesspointcontrol.mapper.WorkScheduleMapper;
 import one.dio.accesspointcontrol.model.WorkSchedule;
 import one.dio.accesspointcontrol.repository.WorkScheduleRepository;
@@ -36,11 +37,15 @@ public class WorkScheduleService {
                                      .collect(Collectors.toList());        
     }
 
-    /*public Optional<WorkSchedule> findById(long id) {
-        return workDayRepository.findById(id);
+    public WorkScheduleDTO findById(long id) throws WorkScheduleNotFoundException {
+        WorkSchedule foundWorkSchedule = workScheduleRepository.findById(id)
+                                                               .orElseThrow(
+                                                                   () -> new WorkScheduleNotFoundException(id));
+
+        return workScheduleMapper.toDTO(foundWorkSchedule);
     }
 
-    public WorkSchedule update(WorkSchedule workDay) {
+    /*public WorkSchedule update(WorkSchedule workDay) {
         return workDayRepository.save(workDay);
     }
 

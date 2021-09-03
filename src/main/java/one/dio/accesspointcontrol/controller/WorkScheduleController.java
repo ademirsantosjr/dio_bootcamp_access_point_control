@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 import one.dio.accesspointcontrol.dto.WorkScheduleDTO;
+import one.dio.accesspointcontrol.exception.WorkScheduleNotFoundException;
 import one.dio.accesspointcontrol.service.WorkScheduleService;
 
 @RestController
@@ -40,12 +41,12 @@ public class WorkScheduleController implements WorkScheduleControllerSwaggerDocs
         return workScheduleService.findAll();
     }
 
-    /*@GetMapping("/{id}")
-    public ResponseEntity<WorkSchedule> findById(@PathVariable("id") long id) throws NoSuchElementException {
-        return ResponseEntity.ok(workScheduleService.findById(id).orElseThrow(() -> new NoSuchElementException("Work Schedule not found!")));
+    @GetMapping("/{id}")
+    public WorkScheduleDTO findById(@PathVariable("id") long id) throws WorkScheduleNotFoundException {
+        return workScheduleService.findById(id);
     }
     
-    @PutMapping
+    /*@PutMapping
     public WorkSchedule update(@RequestBody WorkSchedule workSchedule) {
         return workScheduleService.save(workSchedule);
     }
