@@ -2,8 +2,13 @@ package one.dio.accesspointcontrol.service;
 
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
+import java.util.List;
+
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.empty;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -44,6 +49,22 @@ public class WorkScheduleServiceTest {
 
         assertThat(createdWorkScheduleDTO.getId(), is(equalTo(submittedWorkScheduleDTO.getId())));
         assertThat(createdWorkScheduleDTO.getDescription(), is(equalTo(submittedWorkScheduleDTO.getDescription())));   
+    }
+
+    @Test
+    void findAll_ReturnAllWorkSchedulesInTheDatabase() {
+        // given
+        WorkScheduleDTO workScheduleDTO = WorkScheduleDTOFactory.builder().build().dto();
+        WorkSchedule workSchedule = workScheduleMapper.toModel(workScheduleDTO);
+
+        // when
+        when(workScheduleRepository.findAll()).thenReturn(Collections.singletonList(workSchedule));
+
+        // then
+        List<WorkScheduleDTO> workSchedulesDTOsFound = workScheduleService.findAll();
+
+        assertThat(workSchedulesDTOsFound, is(not(empty())));
+        assertThat(workSchedulesDTOsFound.get(0), is(equalTo(workScheduleDTO)));
     }
     
 }

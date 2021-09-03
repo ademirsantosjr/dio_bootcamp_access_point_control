@@ -35,12 +35,12 @@ public class WorkScheduleController implements WorkScheduleControllerSwaggerDocs
         return workScheduleService.create(workScheduleDTO);
     }
 
-    /*@GetMapping
-    public List<WorkSchedule> findAll() {
+    @GetMapping
+    public List<WorkScheduleDTO> findAll() {
         return workScheduleService.findAll();
     }
 
-    @GetMapping("/{id}")
+    /*@GetMapping("/{id}")
     public ResponseEntity<WorkSchedule> findById(@PathVariable("id") long id) throws NoSuchElementException {
         return ResponseEntity.ok(workScheduleService.findById(id).orElseThrow(() -> new NoSuchElementException("Work Schedule not found!")));
     }

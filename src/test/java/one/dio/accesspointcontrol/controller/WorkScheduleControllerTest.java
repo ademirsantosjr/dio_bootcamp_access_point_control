@@ -8,6 +8,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Collections;
+
 import static one.dio.accesspointcontrol.utils.JsonConverterUtils.asJsonString;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -74,5 +76,21 @@ public class WorkScheduleControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(workScheduleDTO)))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenGETrequest_returnOk() throws Exception {
+        // given
+        WorkScheduleDTO workScheduleDTO = WorkScheduleDTOFactory.builder().build().dto();
+
+        // when
+        when(workScheduleService.findAll()).thenReturn(Collections.singletonList(workScheduleDTO));
+
+        // then
+        mockMvc.perform(post(WORK_SCHEDULE_API_URL_PATH)
+               .contentType(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$[0].id", is((int) workScheduleDTO.getId())))
+               .andExpect(jsonPath("$[0].description", is(workScheduleDTO.getDescription())));
     }
 }
