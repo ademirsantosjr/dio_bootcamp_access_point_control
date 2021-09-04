@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class WorkScheduleDTO {
+public class EmployeeCategoryDTO {
     
     private long id;
 

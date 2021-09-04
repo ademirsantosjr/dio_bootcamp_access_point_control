@@ -27,7 +27,7 @@ public class User {
     private long id;
     
     @ManyToOne
-    private UserCategory userCategory;
+    private EmployeeCategory employeeCategory;
     
     private String name;
     

@@ -1,7 +1,10 @@
 package one.dio.accesspointcontrol.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,9 +20,12 @@ import lombok.ToString;
 @EqualsAndHashCode
 @Builder
 @Entity
-public class UserCategory {
+public class EmployeeCategory {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @NotBlank
     private String description;
 }

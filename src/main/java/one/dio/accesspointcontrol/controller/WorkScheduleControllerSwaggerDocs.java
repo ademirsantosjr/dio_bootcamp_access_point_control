@@ -12,7 +12,7 @@ import one.dio.accesspointcontrol.exception.WorkScheduleNotFoundException;
 @Api("Manages Access Point Control")
 public interface WorkScheduleControllerSwaggerDocs {
     
-    @ApiOperation(value = "Creates Work Schedule (e.g. 'full-time', 'part-time', 'flexible')")
+    @ApiOperation(value = "Creates Work Schedule (e.g. '40 hours a week', '8 hours a day')")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "Work Schedule was successfully created"),
         @ApiResponse(code = 400, message = "One or more required fields are missing")
