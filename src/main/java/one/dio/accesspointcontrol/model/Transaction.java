@@ -44,7 +44,7 @@ public class Transaction {
     private BigDecimal period;
 
     @ManyToOne
-    private Occurrence occurrence;
+    private Event event;
 
     @ManyToOne
     private Calendar calendar;

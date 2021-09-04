@@ -43,7 +43,7 @@ public class EmployeeCategoryService {
     }
 
     public EmployeeCategoryDTO update(EmployeeCategoryDTO employeeCategoryDTO) throws EmployeeCategoryNotFoundException {
-        verifyIfEmployeeCategoryDTOExists(employeeCategoryDTO.getId());
+        verifyIfEmployeeCategoryExists(employeeCategoryDTO.getId());
 
         EmployeeCategory employeeCategoryToUpdate = employeeCategoryMapper.toModel(employeeCategoryDTO);
 
@@ -53,14 +53,14 @@ public class EmployeeCategoryService {
     }
 
     public void deleteById(long id) throws EmployeeCategoryNotFoundException {
-        verifyIfEmployeeCategoryDTOExists(id);
+        verifyIfEmployeeCategoryExists(id);
 
         employeeCategoryRepository.deleteById(id);
     }
 
-    private EmployeeCategory verifyIfEmployeeCategoryDTOExists(long id) throws EmployeeCategoryNotFoundException {
+    private EmployeeCategory verifyIfEmployeeCategoryExists(long id) throws EmployeeCategoryNotFoundException {
         return employeeCategoryRepository.findById(id)
-                                     .orElseThrow(
-                                         () -> new EmployeeCategoryNotFoundException(id));
+                                         .orElseThrow(
+                                             () -> new EmployeeCategoryNotFoundException(id));
     }
 }

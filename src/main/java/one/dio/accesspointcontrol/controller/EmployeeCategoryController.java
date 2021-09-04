@@ -49,7 +49,7 @@ public class EmployeeCategoryController implements EmployeeCategoryControllerSwa
         return employeeCategoryService.update(employeeCategoryDTO);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable long id) throws EmployeeCategoryNotFoundException {
         employeeCategoryService.deleteById(id);
