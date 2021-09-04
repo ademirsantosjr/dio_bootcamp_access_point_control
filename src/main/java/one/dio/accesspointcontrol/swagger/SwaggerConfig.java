@@ -19,7 +19,7 @@ public class SwaggerConfig {
     
     private static final String BASE_PACKAGE = "one.dio.accesspointcontrol";
     private static final String API_TITLE = "Access Point Control";
-    private static final String API_DESCRIPTION = "REST API for Access Point Control Management";
+    private static final String API_DESCRIPTION = "REST API for Access Point Control";
     private static final String CONTACT_NAME = "Ademir M. Stos Jr";
     private static final String CONTACT_GITHUB = "https://github.com/ademirsantosjr";
 

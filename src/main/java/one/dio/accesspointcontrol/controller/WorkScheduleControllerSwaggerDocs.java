@@ -17,18 +17,25 @@ public interface WorkScheduleControllerSwaggerDocs {
         @ApiResponse(code = 201, message = "Work Schedule was successfully created"),
         @ApiResponse(code = 400, message = "One or more required fields are missing")
     })
-    WorkScheduleDTO create(WorkScheduleDTO workScheduleDTO);
+    public WorkScheduleDTO create(WorkScheduleDTO workScheduleDTO);
 
-    @ApiOperation(value = "Returns all Work Schedules stored in the database")
+    @ApiOperation(value = "Returns all Work Schedules in the database")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "List of all Work Schedules in the database")
     })
-    List<WorkScheduleDTO> findAll();
+    public List<WorkScheduleDTO> findAll();
     
-    @ApiOperation(value = "Returns Work Schedule according to a given ID")
+    @ApiOperation(value = "Returns a Work Schedule according to the given ID")
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Work Schedule successfully found with this given ID"),
-        @ApiResponse(code = 404, message = "No Work Schedule was found with this given ID")
+        @ApiResponse(code = 200, message = "Work Schedule successfully found with given ID"),
+        @ApiResponse(code = 404, message = "Work Schedule not found with the given ID")
     })
-    WorkScheduleDTO findById(long id) throws WorkScheduleNotFoundException;
+    public WorkScheduleDTO findById(long id) throws WorkScheduleNotFoundException;
+
+    @ApiOperation(value = "Updates Work Schedule according to the given ID")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Work Schedule successfully updated with given ID"),
+        @ApiResponse(code = 404, message = "Work Schedule not found with the given ID")
+    })
+    public WorkScheduleDTO update(WorkScheduleDTO workScheduleDTO) throws WorkScheduleNotFoundException;
 }

@@ -1,6 +1,8 @@
 package one.dio.accesspointcontrol.controller;
 
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 
 import static org.hamcrest.core.Is.is;
 
@@ -34,6 +36,7 @@ import one.dio.accesspointcontrol.service.WorkScheduleService;
 public class WorkScheduleControllerTest {
     
     private static final String WORK_SCHEDULE_API_URL_PATH = "/api/v1/workschedules";
+    private static final long NOT_EXISTING_WORK_SCHEDULE_ID = 99l;
 
     private MockMvc mockMvc;
 
@@ -124,5 +127,41 @@ public class WorkScheduleControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get(WORK_SCHEDULE_API_URL_PATH + "/" + workScheduleDTO.getId())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void whenPUTrequest_withExistingId_workScheduleShouldBeUpdated() throws Exception {
+        // given
+        WorkScheduleDTO toUpdateWorkScheduleDTO = WorkScheduleDTOFactory.builder().build().dto();
+        WorkScheduleDTO updatedWorkScheduleDTO = toUpdateWorkScheduleDTO;        
+        updatedWorkScheduleDTO.setDescription("Work Schedule has changed");
+
+        doReturn(updatedWorkScheduleDTO)
+            .when(workScheduleService).update(updatedWorkScheduleDTO);
+        
+        // then
+        mockMvc.perform(MockMvcRequestBuilders.put(WORK_SCHEDULE_API_URL_PATH)
+               .contentType(MediaType.APPLICATION_JSON)
+               .content(asJsonString(updatedWorkScheduleDTO)))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$.id", is((int) toUpdateWorkScheduleDTO.getId())))
+               .andExpect(jsonPath("$.description", is(toUpdateWorkScheduleDTO.getDescription())));
+    }
+
+    @Test
+    void whenPUTrequest_withNotExistingId_returnNotFound() throws Exception {
+        // given
+        WorkScheduleDTO toUpdateWorkScheduleDTO = WorkScheduleDTOFactory.builder().build().dto();
+        toUpdateWorkScheduleDTO.setId(NOT_EXISTING_WORK_SCHEDULE_ID);
+
+        // when
+        doThrow(WorkScheduleNotFoundException.class)
+            .when(workScheduleService).update(toUpdateWorkScheduleDTO);
+        
+        // then
+        mockMvc.perform(MockMvcRequestBuilders.put(WORK_SCHEDULE_API_URL_PATH)
+               .contentType(MediaType.APPLICATION_JSON)
+               .content(asJsonString(toUpdateWorkScheduleDTO)))
+               .andExpect(status().isNotFound());
     }
 }

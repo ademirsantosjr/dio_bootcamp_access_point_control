@@ -45,11 +45,23 @@ public class WorkScheduleService {
         return workScheduleMapper.toDTO(foundWorkSchedule);
     }
 
-    /*public WorkSchedule update(WorkSchedule workDay) {
-        return workDayRepository.save(workDay);
+    public WorkScheduleDTO update(WorkScheduleDTO workScheduleDTO) throws WorkScheduleNotFoundException {
+        verifyIfWorkScheduleDTOExists(workScheduleDTO.getId());
+
+        WorkSchedule workScheduleToUpdate = workScheduleMapper.toModel(workScheduleDTO);
+
+        WorkSchedule updatedWorkSchedule = workScheduleRepository.save(workScheduleToUpdate);
+
+        return workScheduleMapper.toDTO(updatedWorkSchedule);
     }
 
-    public void deleteById(long id) {
+    /*public void deleteById(long id) {
         workDayRepository.deleteById(id);
     }*/
+
+    private WorkSchedule verifyIfWorkScheduleDTOExists(long id) throws WorkScheduleNotFoundException {
+        return workScheduleRepository.findById(id)
+                                     .orElseThrow(
+                                         () -> new WorkScheduleNotFoundException(id));
+    }
 }

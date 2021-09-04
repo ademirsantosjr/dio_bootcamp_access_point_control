@@ -42,16 +42,16 @@ public class WorkScheduleController implements WorkScheduleControllerSwaggerDocs
     }
 
     @GetMapping("/{id}")
-    public WorkScheduleDTO findById(@PathVariable("id") long id) throws WorkScheduleNotFoundException {
+    public WorkScheduleDTO findById(@PathVariable long id) throws WorkScheduleNotFoundException {
         return workScheduleService.findById(id);
     }
     
-    /*@PutMapping
-    public WorkSchedule update(@RequestBody WorkSchedule workSchedule) {
-        return workScheduleService.save(workSchedule);
+    @PutMapping
+    public WorkScheduleDTO update(@RequestBody WorkScheduleDTO workScheduleDTO) throws WorkScheduleNotFoundException {
+        return workScheduleService.update(workScheduleDTO);
     }
 
-    @DeleteMapping("{id}")
+    /*@DeleteMapping("{id}")
     public void deleteById(@PathVariable("id") long id) {
         workScheduleService.deleteById(id);
     }*/

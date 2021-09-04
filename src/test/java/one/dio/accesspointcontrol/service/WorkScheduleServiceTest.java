@@ -40,7 +40,7 @@ public class WorkScheduleServiceTest {
     private WorkScheduleService workScheduleService;
 
     @Test
-    void whenCreate_WithNotEmptyDescription_workScheduleShouldBeCreated() {
+    void whenCreate_WithNotBlankDescription_workScheduleShouldBeCreated() {
         // given
         WorkScheduleDTO submittedWorkScheduleDTO = WorkScheduleDTOFactory.builder().build().dto();
         WorkSchedule workScheduleToSave = workScheduleMapper.toModel(submittedWorkScheduleDTO);
