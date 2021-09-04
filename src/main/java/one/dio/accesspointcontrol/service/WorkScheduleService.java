@@ -55,9 +55,11 @@ public class WorkScheduleService {
         return workScheduleMapper.toDTO(updatedWorkSchedule);
     }
 
-    /*public void deleteById(long id) {
-        workDayRepository.deleteById(id);
-    }*/
+    public void deleteById(long id) throws WorkScheduleNotFoundException {
+        verifyIfWorkScheduleDTOExists(id);
+
+        workScheduleRepository.deleteById(id);
+    }
 
     private WorkSchedule verifyIfWorkScheduleDTOExists(long id) throws WorkScheduleNotFoundException {
         return workScheduleRepository.findById(id)

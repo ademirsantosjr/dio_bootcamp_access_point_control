@@ -3,6 +3,7 @@ package one.dio.accesspointcontrol.controller;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.doNothing;
 
 import static org.hamcrest.core.Is.is;
 
@@ -163,5 +164,31 @@ public class WorkScheduleControllerTest {
                .contentType(MediaType.APPLICATION_JSON)
                .content(asJsonString(toUpdateWorkScheduleDTO)))
                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void whenDELETErequest_withExistingId_returnNoContent() throws Exception {
+        // given
+        WorkScheduleDTO toDeleteWorkScheduleDTO = WorkScheduleDTOFactory.builder().build().dto();
+
+        // when
+        doNothing().when(workScheduleService).deleteById(toDeleteWorkScheduleDTO.getId());
+
+        // then
+        mockMvc.perform(MockMvcRequestBuilders.delete(WORK_SCHEDULE_API_URL_PATH + "/" + toDeleteWorkScheduleDTO.getId())
+               .contentType(MediaType.APPLICATION_JSON))
+               .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void whenDELETErequest_withNotExistingId_returnNotFound() throws Exception {
+        // when
+        doThrow(WorkScheduleNotFoundException.class)
+            .when(workScheduleService).deleteById(NOT_EXISTING_WORK_SCHEDULE_ID);
+        
+        // then
+        mockMvc.perform(MockMvcRequestBuilders.delete(WORK_SCHEDULE_API_URL_PATH + "/" + NOT_EXISTING_WORK_SCHEDULE_ID)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }

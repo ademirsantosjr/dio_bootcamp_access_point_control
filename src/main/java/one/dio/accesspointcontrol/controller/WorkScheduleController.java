@@ -51,8 +51,9 @@ public class WorkScheduleController implements WorkScheduleControllerSwaggerDocs
         return workScheduleService.update(workScheduleDTO);
     }
 
-    /*@DeleteMapping("{id}")
-    public void deleteById(@PathVariable("id") long id) {
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable long id) throws WorkScheduleNotFoundException {
         workScheduleService.deleteById(id);
-    }*/
+    }
 }

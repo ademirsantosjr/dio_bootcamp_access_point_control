@@ -27,15 +27,22 @@ public interface WorkScheduleControllerSwaggerDocs {
     
     @ApiOperation(value = "Returns a Work Schedule according to the given ID")
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Work Schedule successfully found with given ID"),
-        @ApiResponse(code = 404, message = "Work Schedule not found with the given ID")
+        @ApiResponse(code = 200, message = "A Work Schedule with given ID was successfully found"),
+        @ApiResponse(code = 404, message = "Work Schedule not found with given ID")
     })
     public WorkScheduleDTO findById(long id) throws WorkScheduleNotFoundException;
 
     @ApiOperation(value = "Updates Work Schedule according to the given ID")
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Work Schedule successfully updated with given ID"),
-        @ApiResponse(code = 404, message = "Work Schedule not found with the given ID")
+        @ApiResponse(code = 200, message = "Work Schedule with given ID was successfully updated"),
+        @ApiResponse(code = 404, message = "Work Schedule not found with given ID")
     })
     public WorkScheduleDTO update(WorkScheduleDTO workScheduleDTO) throws WorkScheduleNotFoundException;
+
+    @ApiOperation(value = "Deletes Work Schedule according to the given ID")
+    @ApiResponses(value = {
+        @ApiResponse(code = 204, message = "Work Schedule with given ID was successfully deleted"),
+        @ApiResponse(code = 404, message = "There is no Work Schedule with given ID")
+    })
+    public void deleteById(long id) throws WorkScheduleNotFoundException;
 }
