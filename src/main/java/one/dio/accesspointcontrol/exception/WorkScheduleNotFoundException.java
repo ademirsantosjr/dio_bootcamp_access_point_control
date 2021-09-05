@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class WorkScheduleNotFoundException extends Exception{
     
     public WorkScheduleNotFoundException(long id) {
-        super(String.format("No Work Schedule with given ID=%s", id));
+        super(String.format("There is no Work Schedule with given ID=%s", id));
     }
 }

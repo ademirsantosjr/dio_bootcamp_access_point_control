@@ -26,7 +26,7 @@ public class Calendar {
     private long id;
 
     @ManyToOne
-    private DateType dateType;
+    private DateFormat dateType;
 
     private String description;
 

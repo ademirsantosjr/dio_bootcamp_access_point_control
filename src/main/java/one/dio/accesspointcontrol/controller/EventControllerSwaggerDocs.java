@@ -10,7 +10,7 @@ import one.dio.accesspointcontrol.dto.EventDTO;
 import one.dio.accesspointcontrol.exception.EventNotFoundException;
 
 @Api("Manages Access Point Control")
-public interface EventSwaggerDocs {
+public interface EventControllerSwaggerDocs {
     
     @ApiOperation(value = "Creates Event (e.g. 'regular-day', 'compensation')")
     @ApiResponses(value = {

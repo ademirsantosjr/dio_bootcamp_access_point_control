@@ -17,41 +17,41 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
-import one.dio.accesspointcontrol.dto.EventDTO;
-import one.dio.accesspointcontrol.exception.EventNotFoundException;
-import one.dio.accesspointcontrol.service.EventService;
+import one.dio.accesspointcontrol.dto.CompanyDTO;
+import one.dio.accesspointcontrol.exception.CompanyNotFoundException;
+import one.dio.accesspointcontrol.service.CompanyService;
 
 @RestController
-@RequestMapping("/api/v1/events")
+@RequestMapping("/api/v1/companies")
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class EventController implements EventControllerSwaggerDocs {
+public class CompanyController implements CompanyControllerSwaggerDocs {
 
-    EventService eventService;
+    CompanyService companyService;
     
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EventDTO create(@RequestBody @Valid EventDTO eventDTO) {
-        return eventService.create(eventDTO);
+    public CompanyDTO create(@RequestBody @Valid CompanyDTO companyDTO) {
+        return companyService.create(companyDTO);
     }
 
     @GetMapping
-    public List<EventDTO> findAll() {
-        return eventService.findAll();
+    public List<CompanyDTO> findAll() {
+        return companyService.findAll();
     }
 
     @GetMapping("/{id}")
-    public EventDTO findById(@PathVariable long id) throws EventNotFoundException {
-        return eventService.findById(id);
+    public CompanyDTO findById(@PathVariable long id) throws CompanyNotFoundException {
+        return companyService.findById(id);
     }
     
     @PutMapping
-    public EventDTO update(@RequestBody EventDTO eventDTO) throws EventNotFoundException {
-        return eventService.update(eventDTO);
+    public CompanyDTO update(@RequestBody CompanyDTO companyDTO) throws CompanyNotFoundException {
+        return companyService.update(companyDTO);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@PathVariable long id) throws EventNotFoundException {
-        eventService.deleteById(id);
+    public void deleteById(@PathVariable long id) throws CompanyNotFoundException {
+        companyService.deleteById(id);
     }
 }
