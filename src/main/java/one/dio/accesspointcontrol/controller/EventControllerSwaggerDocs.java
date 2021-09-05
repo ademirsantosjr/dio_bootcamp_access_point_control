@@ -32,14 +32,14 @@ public interface EventControllerSwaggerDocs {
     })
     public EventDTO findById(long id) throws EventNotFoundException;
 
-    @ApiOperation(value = "Updates Event according to the given ID")
+    @ApiOperation(value = "Updates an Event according to the given ID")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Event with given ID was successfully updated"),
         @ApiResponse(code = 404, message = "Event not found with given ID")
     })
     public EventDTO update(EventDTO eventDTO) throws EventNotFoundException;
 
-    @ApiOperation(value = "Deletes Event according to the given ID")
+    @ApiOperation(value = "Deletes an Event according to the given ID")
     @ApiResponses(value = {
         @ApiResponse(code = 204, message = "Event with given ID was successfully deleted"),
         @ApiResponse(code = 404, message = "There is no Event with given ID")

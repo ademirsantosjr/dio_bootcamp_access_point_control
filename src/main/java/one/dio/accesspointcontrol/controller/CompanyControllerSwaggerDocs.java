@@ -39,7 +39,7 @@ public interface CompanyControllerSwaggerDocs {
     })
     public CompanyDTO update(CompanyDTO companyDTO) throws CompanyNotFoundException;
 
-    @ApiOperation(value = "Deletes Company according to the given ID")
+    @ApiOperation(value = "Deletes a Company according to the given ID")
     @ApiResponses(value = {
         @ApiResponse(code = 204, message = "Company with given ID was successfully deleted"),
         @ApiResponse(code = 404, message = "There is no Company with given ID")

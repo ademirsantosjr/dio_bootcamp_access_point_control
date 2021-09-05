@@ -32,14 +32,14 @@ public interface EmployeeCategoryControllerSwaggerDocs {
     })
     public EmployeeCategoryDTO findById(long id) throws EmployeeCategoryNotFoundException;
 
-    @ApiOperation(value = "Updates Employee Category according to the given ID")
+    @ApiOperation(value = "Updates an Employee Category according to the given ID")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Employee Category with given ID was successfully updated"),
         @ApiResponse(code = 404, message = "Employee Category not found with given ID")
     })
     public EmployeeCategoryDTO update(EmployeeCategoryDTO employeeCategoryDTO) throws EmployeeCategoryNotFoundException;
 
-    @ApiOperation(value = "Deletes Employee Category according to the given ID")
+    @ApiOperation(value = "Deletes an Employee Category according to the given ID")
     @ApiResponses(value = {
         @ApiResponse(code = 204, message = "Employee Category with given ID was successfully deleted"),
         @ApiResponse(code = 404, message = "There is no Employee Category with given ID")

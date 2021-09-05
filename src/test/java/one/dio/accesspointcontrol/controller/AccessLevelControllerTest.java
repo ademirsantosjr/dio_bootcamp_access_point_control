@@ -28,154 +28,154 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import one.dio.accesspointcontrol.dto.CompanyDTO;
-import one.dio.accesspointcontrol.dtofactory.CompanyDTOFactory;
-import one.dio.accesspointcontrol.exception.CompanyNotFoundException;
-import one.dio.accesspointcontrol.service.CompanyService;
+import one.dio.accesspointcontrol.dto.AccessLevelDTO;
+import one.dio.accesspointcontrol.dtofactory.AccessLevelDTOFactory;
+import one.dio.accesspointcontrol.exception.AccessLevelNotFoundException;
+import one.dio.accesspointcontrol.service.AccessLevelService;
 
 @ExtendWith(MockitoExtension.class)
-public class CompanyControllerTest {
+public class AccessLevelControllerTest {
     
-    private static final String API_URL_PATH = "/api/v1/companies";
+    private static final String API_URL_PATH = "/api/v1/accesslevels";
     private static final long NOT_EXISTING__ID = 99l;
 
     private MockMvc mockMvc;
 
     @Mock
-    private CompanyService companyService;
+    private AccessLevelService accessLevelService;
 
     @InjectMocks
-    private CompanyController companyController;
+    private AccessLevelController accessLevelController;
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(companyController)
+        mockMvc = MockMvcBuilders.standaloneSetup(accessLevelController)
                                  .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
                                  .setViewResolvers((s, locale) -> new MappingJackson2JsonView())
                                  .build();
     }
 
     @Test
-    void whenPOSTrequest_withNotBlankName_companyShouldBeCreated() throws Exception {
+    void whenPOSTrequest_withNotBlankName_accessLevelShouldBeCreated() throws Exception {
         // given
-        CompanyDTO companyDTO = CompanyDTOFactory.builder().build().dto();
+        AccessLevelDTO accessLevelDTO = AccessLevelDTOFactory.builder().build().dto();
 
         // when
-        when(companyService.create(companyDTO)).thenReturn(companyDTO);
+        when(accessLevelService.create(accessLevelDTO)).thenReturn(accessLevelDTO);
 
         // then
         mockMvc.perform(post(API_URL_PATH)
                .contentType(MediaType.APPLICATION_JSON)
-               .content(asJsonString(companyDTO)))
-               .andExpect(jsonPath("$.id", is((int) companyDTO.getId())))
-               .andExpect(jsonPath("$.name", is(companyDTO.getName())));
+               .content(asJsonString(accessLevelDTO)))
+               .andExpect(jsonPath("$.id", is((int) accessLevelDTO.getId())))
+               .andExpect(jsonPath("$.description", is(accessLevelDTO.getDescription())));
     }
 
     @Test 
     void whenPOSTrequest_withBlankName_returnBadRequest() throws Exception {
         // given
-        CompanyDTO companyDTO = CompanyDTOFactory.builder().build().dto();
-        companyDTO.setName(" ");
+        AccessLevelDTO accessLevelDTO = AccessLevelDTOFactory.builder().build().dto();
+        accessLevelDTO.setDescription(" ");
 
         // then
         mockMvc.perform(post(API_URL_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(companyDTO)))
+                .content(asJsonString(accessLevelDTO)))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     void whenGETrequest_returnOk() throws Exception {
         // given
-        CompanyDTO companyDTO = CompanyDTOFactory.builder().build().dto();
+        AccessLevelDTO accessLevelDTO = AccessLevelDTOFactory.builder().build().dto();
 
         // when
-        when(companyService.findAll()).thenReturn(Collections.singletonList(companyDTO));
+        when(accessLevelService.findAll()).thenReturn(Collections.singletonList(accessLevelDTO));
 
         // then
         mockMvc.perform(MockMvcRequestBuilders.get(API_URL_PATH)
                .contentType(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
-               .andExpect(jsonPath("$[0].id", is((int) companyDTO.getId())))
-               .andExpect(jsonPath("$[0].name", is(companyDTO.getName())));
+               .andExpect(jsonPath("$[0].id", is((int) accessLevelDTO.getId())))
+               .andExpect(jsonPath("$[0].description", is(accessLevelDTO.getDescription())));
     }
 
     @Test
     void whenGETrequest_withExistingId_returnOk() throws Exception {
         // given
-        CompanyDTO companyDTO = CompanyDTOFactory.builder().build().dto();        
+        AccessLevelDTO accessLevelDTO = AccessLevelDTOFactory.builder().build().dto();        
 
         // when
-        when(companyService.findById(companyDTO.getId())).thenReturn(companyDTO);
+        when(accessLevelService.findById(accessLevelDTO.getId())).thenReturn(accessLevelDTO);
 
         // then
-        mockMvc.perform(MockMvcRequestBuilders.get(API_URL_PATH + "/" + companyDTO.getId())
+        mockMvc.perform(MockMvcRequestBuilders.get(API_URL_PATH + "/" + accessLevelDTO.getId())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is((int) companyDTO.getId())))
-                .andExpect(jsonPath("$.name", is(companyDTO.getName())));
+                .andExpect(jsonPath("$.id", is((int) accessLevelDTO.getId())))
+                .andExpect(jsonPath("$.description", is(accessLevelDTO.getDescription())));
     }
 
     @Test
     void whenGETrequest_withNotExistingId_returnNotFound() throws Exception {
         // given
-        CompanyDTO companyDTO = CompanyDTOFactory.builder().build().dto();        
+        AccessLevelDTO accessLevelDTO = AccessLevelDTOFactory.builder().build().dto();        
 
         // when
-        when(companyService.findById(companyDTO.getId())).thenThrow(CompanyNotFoundException.class);
+        when(accessLevelService.findById(accessLevelDTO.getId())).thenThrow(AccessLevelNotFoundException.class);
 
         // then
-        mockMvc.perform(MockMvcRequestBuilders.get(API_URL_PATH + "/" + companyDTO.getId())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
+        mockMvc.perform(MockMvcRequestBuilders.get(API_URL_PATH + "/" + accessLevelDTO.getId())
+               .contentType(MediaType.APPLICATION_JSON))
+               .andExpect(status().isNotFound());
     }
 
     @Test
-    void whenPUTrequest_withExistingId_companyShouldBeUpdated() throws Exception {
+    void whenPUTrequest_withExistingId_accessLevelShouldBeUpdated() throws Exception {
         // given
-        CompanyDTO toUpdateCompanyDTO = CompanyDTOFactory.builder().build().dto();
-        CompanyDTO updatedCompanyDTO = toUpdateCompanyDTO;        
-        updatedCompanyDTO.setName("It has changed");
+        AccessLevelDTO toUpdateAccessLevelDTO = AccessLevelDTOFactory.builder().build().dto();
+        AccessLevelDTO updatedAccessLevelDTO = toUpdateAccessLevelDTO;        
+        updatedAccessLevelDTO.setDescription("It has changed");
 
-        doReturn(updatedCompanyDTO)
-            .when(companyService).update(updatedCompanyDTO);
+        doReturn(updatedAccessLevelDTO)
+            .when(accessLevelService).update(updatedAccessLevelDTO);
         
         // then
         mockMvc.perform(MockMvcRequestBuilders.put(API_URL_PATH)
                .contentType(MediaType.APPLICATION_JSON)
-               .content(asJsonString(updatedCompanyDTO)))
+               .content(asJsonString(updatedAccessLevelDTO)))
                .andExpect(status().isOk())
-               .andExpect(jsonPath("$.id", is((int) toUpdateCompanyDTO.getId())))
-               .andExpect(jsonPath("$.name", is(toUpdateCompanyDTO.getName())));
+               .andExpect(jsonPath("$.id", is((int) toUpdateAccessLevelDTO.getId())))
+               .andExpect(jsonPath("$.description", is(toUpdateAccessLevelDTO.getDescription())));
     }
 
     @Test
     void whenPUTrequest_withNotExistingId_returnNotFound() throws Exception {
         // given
-        CompanyDTO toUpdateCompanyDTO = CompanyDTOFactory.builder().build().dto();
-        toUpdateCompanyDTO.setId(NOT_EXISTING__ID);
+        AccessLevelDTO toUpdateAccessLevelDTO = AccessLevelDTOFactory.builder().build().dto();
+        toUpdateAccessLevelDTO.setId(NOT_EXISTING__ID);
 
         // when
-        doThrow(CompanyNotFoundException.class)
-            .when(companyService).update(toUpdateCompanyDTO);
+        doThrow(AccessLevelNotFoundException.class)
+            .when(accessLevelService).update(toUpdateAccessLevelDTO);
         
         // then
         mockMvc.perform(MockMvcRequestBuilders.put(API_URL_PATH)
                .contentType(MediaType.APPLICATION_JSON)
-               .content(asJsonString(toUpdateCompanyDTO)))
+               .content(asJsonString(toUpdateAccessLevelDTO)))
                .andExpect(status().isNotFound());
     }
 
     @Test
     void whenDELETErequest_withExistingId_returnNoContent() throws Exception {
         // given
-        CompanyDTO toDeleteCompanyDTO = CompanyDTOFactory.builder().build().dto();
+        AccessLevelDTO toDeleteAccessLevelDTO = AccessLevelDTOFactory.builder().build().dto();
 
         // when
-        doNothing().when(companyService).deleteById(toDeleteCompanyDTO.getId());
+        doNothing().when(accessLevelService).deleteById(toDeleteAccessLevelDTO.getId());
 
         // then
-        mockMvc.perform(MockMvcRequestBuilders.delete(API_URL_PATH + "/" + toDeleteCompanyDTO.getId())
+        mockMvc.perform(MockMvcRequestBuilders.delete(API_URL_PATH + "/" + toDeleteAccessLevelDTO.getId())
                .contentType(MediaType.APPLICATION_JSON))
                .andExpect(status().isNoContent());
     }
@@ -183,8 +183,8 @@ public class CompanyControllerTest {
     @Test
     void whenDELETErequest_withNotExistingId_returnNotFound() throws Exception {
         // when
-        doThrow(CompanyNotFoundException.class)
-            .when(companyService).deleteById(NOT_EXISTING__ID);
+        doThrow(AccessLevelNotFoundException.class)
+            .when(accessLevelService).deleteById(NOT_EXISTING__ID);
         
         // then
         mockMvc.perform(MockMvcRequestBuilders.delete(API_URL_PATH + "/" + NOT_EXISTING__ID)
