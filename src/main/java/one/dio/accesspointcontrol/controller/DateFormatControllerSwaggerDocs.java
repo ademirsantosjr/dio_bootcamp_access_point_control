@@ -17,7 +17,7 @@ public interface DateFormatControllerSwaggerDocs {
         @ApiResponse(code = 201, message = "Date Format was successfully created"),
         @ApiResponse(code = 400, message = "One or more required fields are missing")
     })
-    public DateFormatDTO create(DateFormatDTO companyDTO);
+    public DateFormatDTO create(DateFormatDTO dateFormatDTO);
 
     @ApiOperation(value = "Returns all Date Formats in the database")
     @ApiResponses(value = {
@@ -37,7 +37,7 @@ public interface DateFormatControllerSwaggerDocs {
         @ApiResponse(code = 200, message = "Date Format with given ID was successfully updated"),
         @ApiResponse(code = 404, message = "Date Format not found with given ID")
     })
-    public DateFormatDTO update(DateFormatDTO companyDTO) throws DateFormatNotFoundException;
+    public DateFormatDTO update(DateFormatDTO dateFormatDTO) throws DateFormatNotFoundException;
 
     @ApiOperation(value = "Deletes a Date Format according to the given ID")
     @ApiResponses(value = {

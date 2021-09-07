@@ -1,33 +1,24 @@
-package one.dio.accesspointcontrol.model;
+package one.dio.accesspointcontrol.dto;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import one.dio.accesspointcontrol.model.DateFormat;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
 @Builder
-@Entity
-public class Calendar {
+public class CalendarDTO {
     
-    @Id
     private long id;
-
-    @ManyToOne
+    
     @NotNull
     private DateFormat dateFormat;
 
