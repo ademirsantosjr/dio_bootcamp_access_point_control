@@ -11,7 +11,7 @@ public interface DateFormatMapper {
     
     DateFormatMapper INSTANCE = Mappers.getMapper(DateFormatMapper.class);
 
-    DateFormat toModel(DateFormatDTO accessLevelDTO);
+    DateFormat toModel(DateFormatDTO dateFormatDTO);
 
-    DateFormatDTO toDTO(DateFormat accessLevel);
+    DateFormatDTO toDTO(DateFormat dateFormat);
 }
